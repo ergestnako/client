@@ -415,8 +415,9 @@ func (d DebugLabeler) Debug(ctx context.Context, msg string, args ...interface{}
 	}
 }
 
-func (d DebugLabeler) Trace(ctx context.Context, f func() error, msg string) func() {
+func (d DebugLabeler) Trace(ctx context.Context, f func() error, format string, args ...interface{}) func() {
 	if d.showLog() {
+		msg := fmt.Sprintf(format, args...)
 		start := time.Now()
 		d.log.CDebugf(ctx, "++Chat: + %s: %s", d.label, msg)
 		return func() {
@@ -901,10 +902,11 @@ func PresentMessageUnboxed(ctx context.Context, rawMsg chat1.MessageUnboxed, uid
 			SenderDeviceName:      rawMsg.Valid().SenderDeviceName,
 			SenderDeviceType:      rawMsg.Valid().SenderDeviceType,
 			SenderDeviceRevokedAt: rawMsg.Valid().SenderDeviceRevokedAt,
-			Superseded:            rawMsg.Valid().ServerHeader.SupersededBy != 0,
-			AtMentions:            rawMsg.Valid().AtMentionUsernames,
-			ChannelMention:        rawMsg.Valid().ChannelMention,
-			ChannelNameMentions:   presentChannelNameMentions(ctx, channelNameMentions),
+			// @@@ TODO Should this be `Deleted` and account for supersededby=0 and tlfname-has-no-body
+			Superseded:          rawMsg.Valid().ServerHeader.SupersededBy != 0,
+			AtMentions:          rawMsg.Valid().AtMentionUsernames,
+			ChannelMention:      rawMsg.Valid().ChannelMention,
+			ChannelNameMentions: presentChannelNameMentions(ctx, channelNameMentions),
 		})
 	case chat1.MessageUnboxedState_OUTBOX:
 		var body string

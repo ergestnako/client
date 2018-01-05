@@ -40,6 +40,10 @@ func (id TLFID) Bytes() []byte {
 	return []byte(id)
 }
 
+func (id TLFID) IsNil() bool {
+	return len(id) == 0
+}
+
 func MakeConvID(val string) (ConversationID, error) {
 	return hex.DecodeString(val)
 }
@@ -108,7 +112,6 @@ var nonDeletableMessageTypesByDeleteHistory = []MessageType{
 	MessageType_TLFNAME,
 	MessageType_HEADLINE,
 	MessageType_DELETEHISTORY,
-	MessageType_RETENTION,
 }
 
 func DeletableMessageTypesByDelete() []MessageType {
@@ -777,4 +780,17 @@ func (c ConversationMemberStatus) ToGregorDBStringAssert() string {
 		panic(err)
 	}
 	return s
+}
+
+func (p RetentionPolicy) Summary() string {
+	typ, err := p.Typ()
+	if err != nil {
+		return "{variant error}"
+	}
+	switch typ {
+	case RetentionPolicyType_EXPIRE:
+		return fmt.Sprintf("{%v age:%v}", typ, p.Expire().Age)
+	default:
+		return fmt.Sprintf("{%v}", typ)
+	}
 }

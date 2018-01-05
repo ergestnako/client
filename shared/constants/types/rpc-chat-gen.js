@@ -68,12 +68,18 @@ export const commonMessageType = {
   leave: 10,
   system: 11,
   deletehistory: 12,
-  retention: 13,
 }
 
 export const commonNotificationKind = {
   generic: 0,
   atmention: 1,
+}
+
+export const commonRetentionPolicyType = {
+  none: 0,
+  retain: 1,
+  expire: 2,
+  inherit: 3,
 }
 
 export const commonSyncInboxResType = {
@@ -310,10 +316,6 @@ export const localPostMetadataRpcChannelMap = (configKeys: Array<string>, reques
 
 export const localPostMetadataRpcPromise = (request: LocalPostMetadataRpcParam): Promise<LocalPostMetadataResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.postMetadata', request, (error: RPCError, result: LocalPostMetadataResult) => (error ? reject(error) : resolve(result))))
 
-export const localPostRetentionPolicyRpcChannelMap = (configKeys: Array<string>, request: LocalPostRetentionPolicyRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.postRetentionPolicy', request)
-
-export const localPostRetentionPolicyRpcPromise = (request: LocalPostRetentionPolicyRpcParam): Promise<LocalPostRetentionPolicyResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.postRetentionPolicy', request, (error: RPCError, result: LocalPostRetentionPolicyResult) => (error ? reject(error) : resolve(result))))
-
 export const localPostTextNonblockRpcChannelMap = (configKeys: Array<string>, request: LocalPostTextNonblockRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.postTextNonblock', request)
 
 export const localPostTextNonblockRpcPromise = (request: LocalPostTextNonblockRpcParam): Promise<LocalPostTextNonblockResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.postTextNonblock', request, (error: RPCError, result: LocalPostTextNonblockResult) => (error ? reject(error) : resolve(result))))
@@ -321,12 +323,6 @@ export const localPostTextNonblockRpcPromise = (request: LocalPostTextNonblockRp
 export const localPreviewConversationByIDLocalRpcChannelMap = (configKeys: Array<string>, request: LocalPreviewConversationByIDLocalRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.previewConversationByIDLocal', request)
 
 export const localPreviewConversationByIDLocalRpcPromise = (request: LocalPreviewConversationByIDLocalRpcParam): Promise<LocalPreviewConversationByIDLocalResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.previewConversationByIDLocal', request, (error: RPCError, result: LocalPreviewConversationByIDLocalResult) => (error ? reject(error) : resolve(result))))
-
-export const localRetentionPolicyType = {
-  none: 0,
-  retain: 1,
-  expire: 2,
-}
 
 export const localRetryPostRpcChannelMap = (configKeys: Array<string>, request: LocalRetryPostRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.RetryPost', request)
 
@@ -336,6 +332,10 @@ export const localSetAppNotificationSettingsLocalRpcChannelMap = (configKeys: Ar
 
 export const localSetAppNotificationSettingsLocalRpcPromise = (request: LocalSetAppNotificationSettingsLocalRpcParam): Promise<LocalSetAppNotificationSettingsLocalResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.setAppNotificationSettingsLocal', request, (error: RPCError, result: LocalSetAppNotificationSettingsLocalResult) => (error ? reject(error) : resolve(result))))
 
+export const localSetConvRetentionLocalRpcChannelMap = (configKeys: Array<string>, request: LocalSetConvRetentionLocalRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.setConvRetentionLocal', request)
+
+export const localSetConvRetentionLocalRpcPromise = (request: LocalSetConvRetentionLocalRpcParam): Promise<void> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.setConvRetentionLocal', request, (error: RPCError, result: void) => (error ? reject(error) : resolve())))
+
 export const localSetConversationStatusLocalRpcChannelMap = (configKeys: Array<string>, request: LocalSetConversationStatusLocalRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.SetConversationStatusLocal', request)
 
 export const localSetConversationStatusLocalRpcPromise = (request: LocalSetConversationStatusLocalRpcParam): Promise<LocalSetConversationStatusLocalResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.SetConversationStatusLocal', request, (error: RPCError, result: LocalSetConversationStatusLocalResult) => (error ? reject(error) : resolve(result))))
@@ -343,6 +343,10 @@ export const localSetConversationStatusLocalRpcPromise = (request: LocalSetConve
 export const localSetGlobalAppNotificationSettingsLocalRpcChannelMap = (configKeys: Array<string>, request: LocalSetGlobalAppNotificationSettingsLocalRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.setGlobalAppNotificationSettingsLocal', request)
 
 export const localSetGlobalAppNotificationSettingsLocalRpcPromise = (request: LocalSetGlobalAppNotificationSettingsLocalRpcParam): Promise<void> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.setGlobalAppNotificationSettingsLocal', request, (error: RPCError, result: void) => (error ? reject(error) : resolve())))
+
+export const localSetTeamRetentionLocalRpcChannelMap = (configKeys: Array<string>, request: LocalSetTeamRetentionLocalRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.setTeamRetentionLocal', request)
+
+export const localSetTeamRetentionLocalRpcPromise = (request: LocalSetTeamRetentionLocalRpcParam): Promise<void> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.local.setTeamRetentionLocal', request, (error: RPCError, result: void) => (error ? reject(error) : resolve())))
 
 export const localUnboxMobilePushNotificationRpcChannelMap = (configKeys: Array<string>, request: LocalUnboxMobilePushNotificationRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.local.unboxMobilePushNotification', request)
 
@@ -473,6 +477,10 @@ export const remoteSetAppNotificationSettingsRpcChannelMap = (configKeys: Array<
 
 export const remoteSetAppNotificationSettingsRpcPromise = (request: RemoteSetAppNotificationSettingsRpcParam): Promise<RemoteSetAppNotificationSettingsResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.remote.setAppNotificationSettings', request, (error: RPCError, result: RemoteSetAppNotificationSettingsResult) => (error ? reject(error) : resolve(result))))
 
+export const remoteSetConvRetentionRpcChannelMap = (configKeys: Array<string>, request: RemoteSetConvRetentionRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.remote.setConvRetention', request)
+
+export const remoteSetConvRetentionRpcPromise = (request: RemoteSetConvRetentionRpcParam): Promise<RemoteSetConvRetentionResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.remote.setConvRetention', request, (error: RPCError, result: RemoteSetConvRetentionResult) => (error ? reject(error) : resolve(result))))
+
 export const remoteSetConversationStatusRpcChannelMap = (configKeys: Array<string>, request: RemoteSetConversationStatusRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.remote.SetConversationStatus', request)
 
 export const remoteSetConversationStatusRpcPromise = (request: RemoteSetConversationStatusRpcParam): Promise<RemoteSetConversationStatusResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.remote.SetConversationStatus', request, (error: RPCError, result: RemoteSetConversationStatusResult) => (error ? reject(error) : resolve(result))))
@@ -480,6 +488,10 @@ export const remoteSetConversationStatusRpcPromise = (request: RemoteSetConversa
 export const remoteSetGlobalAppNotificationSettingsRpcChannelMap = (configKeys: Array<string>, request: RemoteSetGlobalAppNotificationSettingsRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.remote.setGlobalAppNotificationSettings', request)
 
 export const remoteSetGlobalAppNotificationSettingsRpcPromise = (request: RemoteSetGlobalAppNotificationSettingsRpcParam): Promise<void> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.remote.setGlobalAppNotificationSettings', request, (error: RPCError, result: void) => (error ? reject(error) : resolve())))
+
+export const remoteSetTeamRetentionRpcChannelMap = (configKeys: Array<string>, request: RemoteSetTeamRetentionRpcParam): EngineChannel => engine()._channelMapRpcHelper(configKeys, 'chat.1.remote.setTeamRetention', request)
+
+export const remoteSetTeamRetentionRpcPromise = (request: RemoteSetTeamRetentionRpcParam): Promise<RemoteSetTeamRetentionResult> => new Promise((resolve, reject) => engine()._rpcOutgoing('chat.1.remote.setTeamRetention', request, (error: RPCError, result: RemoteSetTeamRetentionResult) => (error ? reject(error) : resolve(result))))
 
 export const remoteSyncAllNotificationType = {
   state: 0,
@@ -663,7 +675,7 @@ export type ConversationMembersType =
   | 1 // TEAM_1
   | 2 // IMPTEAM_2
 
-export type ConversationMetadata = $ReadOnly<{idTriple: ConversationIDTriple, conversationID: ConversationID, visibility: Keybase1.TLFVisibility, status: ConversationStatus, membersType: ConversationMembersType, teamType: TeamType, existence: ConversationExistence, version: ConversationVers, finalizeInfo?: ?ConversationFinalizeInfo, supersedes?: ?Array<ConversationMetadata>, supersededBy?: ?Array<ConversationMetadata>, activeList?: ?Array<Gregor1.UID>, allList?: ?Array<Gregor1.UID>, resetList?: ?Array<Gregor1.UID>}>
+export type ConversationMetadata = $ReadOnly<{idTriple: ConversationIDTriple, conversationID: ConversationID, visibility: Keybase1.TLFVisibility, status: ConversationStatus, membersType: ConversationMembersType, teamType: TeamType, existence: ConversationExistence, version: ConversationVers, expunge: Expunge, finalizeInfo?: ?ConversationFinalizeInfo, supersedes?: ?Array<ConversationMetadata>, supersededBy?: ?Array<ConversationMetadata>, activeList?: ?Array<Gregor1.UID>, allList?: ?Array<Gregor1.UID>, resetList?: ?Array<Gregor1.UID>}>
 
 export type ConversationNotificationInfo = $ReadOnly<{channelWide: Boolean, settings: {[key: string]: {[key: string]: Boolean}}}>
 
@@ -690,6 +702,8 @@ export type DeleteConversationRemoteRes = $ReadOnly<{rateLimit?: ?RateLimit}>
 export type DownloadAttachmentLocalRes = $ReadOnly<{offline: Boolean, rateLimits?: ?Array<RateLimit>, identifyFailures?: ?Array<Keybase1.TLFIdentifyFailure>}>
 
 export type EncryptedData = $ReadOnly<{v: Int, e: Bytes, n: Bytes}>
+
+export type Expunge = $ReadOnly<{upto: MessageID, basis: MessageID}>
 
 export type FailedMessageInfo = $ReadOnly<{outboxRecords?: ?Array<OutboxRecord>}>
 
@@ -858,8 +872,6 @@ export type LocalPostMetadataNonblockRpcParam = $ReadOnly<{conversationID: Conve
 
 export type LocalPostMetadataRpcParam = $ReadOnly<{conversationID: ConversationID, tlfName: String, tlfPublic: Boolean, channelName: String, identifyBehavior: Keybase1.TLFIdentifyBehavior, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
-export type LocalPostRetentionPolicyRpcParam = $ReadOnly<{conversationID: ConversationID, tlfName: String, tlfPublic: Boolean, identifyBehavior: Keybase1.TLFIdentifyBehavior, policy: MessageRetentionPolicy, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
-
 export type LocalPostTextNonblockRpcParam = $ReadOnly<{conversationID: ConversationID, tlfName: String, tlfPublic: Boolean, body: String, clientPrev: MessageID, outboxID?: ?OutboxID, identifyBehavior: Keybase1.TLFIdentifyBehavior, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
 export type LocalPreviewConversationByIDLocalRpcParam = $ReadOnly<{convID: ConversationID, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
@@ -868,9 +880,13 @@ export type LocalRetryPostRpcParam = $ReadOnly<{outboxID: OutboxID, incomingCall
 
 export type LocalSetAppNotificationSettingsLocalRpcParam = $ReadOnly<{convID: ConversationID, channelWide: Boolean, settings?: ?Array<AppNotificationSettingLocal>, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
+export type LocalSetConvRetentionLocalRpcParam = $ReadOnly<{convID: ConversationID, policy: RetentionPolicy, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
+
 export type LocalSetConversationStatusLocalRpcParam = $ReadOnly<{conversationID: ConversationID, status: ConversationStatus, identifyBehavior: Keybase1.TLFIdentifyBehavior, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
 export type LocalSetGlobalAppNotificationSettingsLocalRpcParam = $ReadOnly<{settings: {[key: string]: Bool}, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
+
+export type LocalSetTeamRetentionLocalRpcParam = $ReadOnly<{teamID: Keybase1.TeamID, policy: RetentionPolicy, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
 export type LocalSource = $ReadOnly<{source: Keybase1.Stream, filename: String, size: Int}>
 
@@ -892,7 +908,7 @@ export type MessageAttachment = $ReadOnly<{object: Asset, preview?: ?Asset, prev
 
 export type MessageAttachmentUploaded = $ReadOnly<{messageID: MessageID, object: Asset, previews?: ?Array<Asset>, metadata: Bytes}>
 
-export type MessageBody = {messageType: 1, text: ?MessageText} | {messageType: 2, attachment: ?MessageAttachment} | {messageType: 3, edit: ?MessageEdit} | {messageType: 4, delete: ?MessageDelete} | {messageType: 5, metadata: ?MessageConversationMetadata} | {messageType: 7, headline: ?MessageHeadline} | {messageType: 8, attachmentuploaded: ?MessageAttachmentUploaded} | {messageType: 9, join: ?MessageJoin} | {messageType: 10, leave: ?MessageLeave} | {messageType: 11, system: ?MessageSystem} | {messageType: 12, deletehistory: ?MessageDeleteHistory} | {messageType: 13, retention: ?MessageRetentionPolicy}
+export type MessageBody = {messageType: 1, text: ?MessageText} | {messageType: 2, attachment: ?MessageAttachment} | {messageType: 3, edit: ?MessageEdit} | {messageType: 4, delete: ?MessageDelete} | {messageType: 5, metadata: ?MessageConversationMetadata} | {messageType: 7, headline: ?MessageHeadline} | {messageType: 8, attachmentuploaded: ?MessageAttachmentUploaded} | {messageType: 9, join: ?MessageJoin} | {messageType: 10, leave: ?MessageLeave} | {messageType: 11, system: ?MessageSystem} | {messageType: 12, deletehistory: ?MessageDeleteHistory}
 
 export type MessageBoxed = $ReadOnly<{version: MessageBoxedVersion, serverHeader?: ?MessageServerHeader, clientHeader: MessageClientHeader, headerCiphertext: SealedData, bodyCiphertext: EncryptedData, verifyKey: Bytes, keyGeneration: Int}>
 
@@ -901,7 +917,7 @@ export type MessageBoxedVersion =
   | 1 // V1_1
   | 2 // V2_2
 
-export type MessageClientHeader = $ReadOnly<{conv: ConversationIDTriple, tlfName: String, tlfPublic: Boolean, messageType: MessageType, supersedes: MessageID, deletes?: ?Array<MessageID>, prev?: ?Array<MessagePreviousPointer>, deleteHistory?: ?MessageDeleteHistory, retentionPolicy?: ?MessageRetentionPolicy, sender: Gregor1.UID, senderDevice: Gregor1.DeviceID, merkleRoot?: ?MerkleRoot, outboxID?: ?OutboxID, outboxInfo?: ?OutboxInfo}>
+export type MessageClientHeader = $ReadOnly<{conv: ConversationIDTriple, tlfName: String, tlfPublic: Boolean, messageType: MessageType, supersedes: MessageID, deletes?: ?Array<MessageID>, prev?: ?Array<MessagePreviousPointer>, deleteHistory?: ?MessageDeleteHistory, sender: Gregor1.UID, senderDevice: Gregor1.DeviceID, merkleRoot?: ?MerkleRoot, outboxID?: ?OutboxID, outboxInfo?: ?OutboxInfo}>
 
 export type MessageClientHeaderVerified = $ReadOnly<{conv: ConversationIDTriple, tlfName: String, tlfPublic: Boolean, messageType: MessageType, prev?: ?Array<MessagePreviousPointer>, sender: Gregor1.UID, senderDevice: Gregor1.DeviceID, merkleRoot?: ?MerkleRoot, outboxID?: ?OutboxID, outboxInfo?: ?OutboxInfo}>
 
@@ -926,8 +942,6 @@ export type MessageLeave = $ReadOnly<{}>
 export type MessagePlaintext = $ReadOnly<{clientHeader: MessageClientHeader, messageBody: MessageBody}>
 
 export type MessagePreviousPointer = $ReadOnly<{id: MessageID, hash: Hash}>
-
-export type MessageRetentionPolicy = {typ: 1, retain: ?RetentionPolicyRetain} | {typ: 2, expire: ?RetentionPolicyExpire}
 
 export type MessageServerHeader = $ReadOnly<{messageID: MessageID, supersededBy: MessageID, ctime: Gregor1.Time}>
 
@@ -968,7 +982,6 @@ export type MessageType =
   | 10 // LEAVE_10
   | 11 // SYSTEM_11
   | 12 // DELETEHISTORY_12
-  | 13 // RETENTION_13
 
 export type MessageUnboxed = {state: 1, valid: ?MessageUnboxedValid} | {state: 2, error: ?MessageUnboxedError} | {state: 3, outbox: ?OutboxRecord} | {state: 4, placeholder: ?MessageUnboxedPlaceholder}
 
@@ -1114,9 +1127,13 @@ export type RemoteS3SignRpcParam = $ReadOnly<{version: Int, payload: Bytes, inco
 
 export type RemoteSetAppNotificationSettingsRpcParam = $ReadOnly<{convID: ConversationID, settings: ConversationNotificationInfo, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
+export type RemoteSetConvRetentionRpcParam = $ReadOnly<{convID: ConversationID, policy: RetentionPolicy, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
+
 export type RemoteSetConversationStatusRpcParam = $ReadOnly<{conversationID: ConversationID, status: ConversationStatus, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
 export type RemoteSetGlobalAppNotificationSettingsRpcParam = $ReadOnly<{settings: GlobalAppNotificationSettings, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
+
+export type RemoteSetTeamRetentionRpcParam = $ReadOnly<{teamID: Keybase1.TeamID, policy: RetentionPolicy, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
 export type RemoteSyncAllRpcParam = $ReadOnly<{uid: Gregor1.UID, deviceID: Gregor1.DeviceID, session: Gregor1.SessionToken, inboxVers: InboxVers, ctime: Gregor1.Time, fresh: Boolean, protVers: SyncAllProtVers, hostName: String, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 
@@ -1132,14 +1149,19 @@ export type RemoteUpdateTypingRemoteRpcParam = $ReadOnly<{uid: Gregor1.UID, devi
 
 export type RemoteUserTypingUpdate = $ReadOnly<{uid: Gregor1.UID, deviceID: Gregor1.DeviceID, convID: ConversationID, typing: Boolean}>
 
-export type RetentionPolicyExpire = $ReadOnly<{age: Gregor1.DurationSec}>
-
-export type RetentionPolicyRetain = $ReadOnly<{}>
+export type RetentionPolicy = {typ: 1, retain: ?RpRetain} | {typ: 2, expire: ?RpExpire} | {typ: 3, inherit: ?RpInherit}
 
 export type RetentionPolicyType =
   | 0 // NONE_0
   | 1 // RETAIN_1
   | 2 // EXPIRE_2
+  | 3 // INHERIT_3
+
+export type RpExpire = $ReadOnly<{age: Gregor1.DurationSec}>
+
+export type RpInherit = $ReadOnly<{}>
+
+export type RpRetain = $ReadOnly<{}>
 
 export type S3Params = $ReadOnly<{bucket: String, objectKey: String, accessKey: String, acl: String, regionName: String, regionEndpoint: String, regionBucketEndpoint: String}>
 
@@ -1158,6 +1180,8 @@ export type SetAppNotificationSettingsRes = $ReadOnly<{rateLimit?: ?RateLimit}>
 export type SetConversationStatusLocalRes = $ReadOnly<{rateLimits?: ?Array<RateLimit>, identifyFailures?: ?Array<Keybase1.TLFIdentifyFailure>}>
 
 export type SetConversationStatusRes = $ReadOnly<{rateLimit?: ?RateLimit}>
+
+export type SetRetentionRes = $ReadOnly<{rateLimit?: ?RateLimit}>
 
 export type SetStatusInfo = $ReadOnly<{convID: ConversationID, status: ConversationStatus, conv?: ?InboxUIItem}>
 
@@ -1289,7 +1313,6 @@ type LocalPostLocalNonblockResult = PostLocalNonblockRes
 type LocalPostLocalResult = PostLocalRes
 type LocalPostMetadataNonblockResult = PostLocalNonblockRes
 type LocalPostMetadataResult = PostLocalRes
-type LocalPostRetentionPolicyResult = PostLocalRes
 type LocalPostTextNonblockResult = PostLocalNonblockRes
 type LocalPreviewConversationByIDLocalResult = JoinLeaveConversationLocalRes
 type LocalSetAppNotificationSettingsLocalResult = SetAppNotificationSettingsLocalRes
@@ -1315,7 +1338,9 @@ type RemotePostRemoteResult = PostRemoteRes
 type RemotePreviewConversationResult = JoinLeaveConversationRemoteRes
 type RemoteS3SignResult = Bytes
 type RemoteSetAppNotificationSettingsResult = SetAppNotificationSettingsRes
+type RemoteSetConvRetentionResult = SetRetentionRes
 type RemoteSetConversationStatusResult = SetConversationStatusRes
+type RemoteSetTeamRetentionResult = SetRetentionRes
 type RemoteSyncAllResult = SyncAllResult
 type RemoteSyncChatResult = SyncChatRes
 type RemoteSyncInboxResult = SyncInboxRes
