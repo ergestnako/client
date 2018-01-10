@@ -711,6 +711,8 @@ type ConversationMetadata struct {
 	Existence      ConversationExistence     `codec:"existence" json:"existence"`
 	Version        ConversationVers          `codec:"version" json:"version"`
 	Expunge        Expunge                   `codec:"expunge" json:"expunge"`
+	ConvRetention  *RetentionPolicy          `codec:"convRetention,omitempty" json:"convRetention,omitempty"`
+	TeamRetention  *RetentionPolicy          `codec:"teamRetention,omitempty" json:"teamRetention,omitempty"`
 	FinalizeInfo   *ConversationFinalizeInfo `codec:"finalizeInfo,omitempty" json:"finalizeInfo,omitempty"`
 	Supersedes     []ConversationMetadata    `codec:"supersedes" json:"supersedes"`
 	SupersededBy   []ConversationMetadata    `codec:"supersededBy" json:"supersededBy"`
@@ -730,6 +732,20 @@ func (o ConversationMetadata) DeepCopy() ConversationMetadata {
 		Existence:      o.Existence.DeepCopy(),
 		Version:        o.Version.DeepCopy(),
 		Expunge:        o.Expunge.DeepCopy(),
+		ConvRetention: (func(x *RetentionPolicy) *RetentionPolicy {
+			if x == nil {
+				return nil
+			}
+			tmp := (*x).DeepCopy()
+			return &tmp
+		})(o.ConvRetention),
+		TeamRetention: (func(x *RetentionPolicy) *RetentionPolicy {
+			if x == nil {
+				return nil
+			}
+			tmp := (*x).DeepCopy()
+			return &tmp
+		})(o.TeamRetention),
 		FinalizeInfo: (func(x *ConversationFinalizeInfo) *ConversationFinalizeInfo {
 			if x == nil {
 				return nil
