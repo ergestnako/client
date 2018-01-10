@@ -496,6 +496,20 @@
         {
           "type": [
             null,
+            "RetentionPolicy"
+          ],
+          "name": "convRetention"
+        },
+        {
+          "type": [
+            null,
+            "RetentionPolicy"
+          ],
+          "name": "teamRetention"
+        },
+        {
+          "type": [
+            null,
             "ConversationFinalizeInfo"
           ],
           "name": "finalizeInfo"

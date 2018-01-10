@@ -675,7 +675,7 @@ export type ConversationMembersType =
   | 1 // TEAM_1
   | 2 // IMPTEAM_2
 
-export type ConversationMetadata = $ReadOnly<{idTriple: ConversationIDTriple, conversationID: ConversationID, visibility: Keybase1.TLFVisibility, status: ConversationStatus, membersType: ConversationMembersType, teamType: TeamType, existence: ConversationExistence, version: ConversationVers, expunge: Expunge, finalizeInfo?: ?ConversationFinalizeInfo, supersedes?: ?Array<ConversationMetadata>, supersededBy?: ?Array<ConversationMetadata>, activeList?: ?Array<Gregor1.UID>, allList?: ?Array<Gregor1.UID>, resetList?: ?Array<Gregor1.UID>}>
+export type ConversationMetadata = $ReadOnly<{idTriple: ConversationIDTriple, conversationID: ConversationID, visibility: Keybase1.TLFVisibility, status: ConversationStatus, membersType: ConversationMembersType, teamType: TeamType, existence: ConversationExistence, version: ConversationVers, expunge: Expunge, convRetention?: ?RetentionPolicy, teamRetention?: ?RetentionPolicy, finalizeInfo?: ?ConversationFinalizeInfo, supersedes?: ?Array<ConversationMetadata>, supersededBy?: ?Array<ConversationMetadata>, activeList?: ?Array<Gregor1.UID>, allList?: ?Array<Gregor1.UID>, resetList?: ?Array<Gregor1.UID>}>
 
 export type ConversationNotificationInfo = $ReadOnly<{channelWide: Boolean, settings: {[key: string]: {[key: string]: Boolean}}}>
 

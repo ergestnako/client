@@ -192,7 +192,7 @@ protocol common {
     // Delete upto this message ID (exclusive)
     MessageID upto;
     // The message that justifies this deletion.
-  // Can point to a DeleteHistory message or be 0 in the case of a retention sweep.
+    // Can point to a DeleteHistory message or be 0 in the case of a retention sweep.
     MessageID basis;
   }
 
@@ -205,8 +205,10 @@ protocol common {
     TeamType teamType;
     ConversationExistence existence;
     ConversationVers version;
-  // The latest history deletion. Defaults to zeroes.
+    // The latest history deletion. Defaults to zeroes.
     Expunge expunge;
+    union { null, RetentionPolicy } convRetention;
+    union { null, RetentionPolicy } teamRetention;
 
     // Finalize info for underlying TLF (only makes sense for KBFS convos)
     union { null, ConversationFinalizeInfo } finalizeInfo;

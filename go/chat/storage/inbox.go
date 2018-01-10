@@ -1075,6 +1075,7 @@ type InboxSyncResExpunge struct {
 	Expunge chat1.Expunge
 }
 
+// @@@ TODO rename this back to Sync.
 func (i *Inbox) SyncXXX(ctx context.Context, vers chat1.InboxVers, convs []chat1.Conversation) (res InboxSyncRes, err Error) {
 	locks.Inbox.Lock()
 	defer locks.Inbox.Unlock()
